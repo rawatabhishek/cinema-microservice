@@ -1,0 +1,17 @@
+{
+  "name": "movies-serive",
+  "version": "1.0.0",
+  "description": "Micro service for the listing of the movies",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "Movies"
+  ],
+  "author": "Abhishek Rawat",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

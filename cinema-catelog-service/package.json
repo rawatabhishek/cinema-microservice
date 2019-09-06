@@ -1,0 +1,19 @@
+{
+  "name": "cinema-catelog-service",
+  "version": "1.0.0",
+  "description": "Listing of cinema in the city",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "Cinema",
+    "catalog",
+    "microservice"
+  ],
+  "author": "Abhishek",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
