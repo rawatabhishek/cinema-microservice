@@ -1,22 +1,38 @@
 const MongoClinet = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectID;
+let _db;
 
-(async function () {
+exports.connectToServer = function (callback) {
+    console.log('Hello')
     const url = 'mongodb://localhost:27017';
     const database = 'cinema-microservice';
     const client = new MongoClinet(url, { useNewUrlParser: true, useUnifiedTopology: true });
-    try {
-        await client.connect();
-        const db = client.db(database);
-        db.collection('cinema-catelog').findOne({_id:ObjectId('5d80c1062d89f21becab4f3b')}).then(response => {
-            console.log(response);
-        }).catch(error => {
-            console.log(error)
-        })
-        return db;
-    } catch (error) {
-        console.log(error.stack);
-    }
-    client.close()
-})();
+    client.connect(function (error) {
+        console.log('Hello world in the db connections')
+        if (error) {
+            return callback(error);
+        } else {
+            _db = client.db('cinema-microservice');
+            return callback(null);
+        }
+    });
+}
+
+exports.getDb = function () {
+    return _db;
+}
+
+    // (async function () {
+    //     const url = 'mongodb://localhost:27017';
+    //     const database = 'cinema-microservice';
+    //     const client = new MongoClinet(url, { useNewUrlParser: true, useUnifiedTopology: true });
+    //     try {
+    //         await client.connect();
+    //         const db = client.db(database);
+    //         return db;
+    //     } catch (error) {
+    //         console.log(error.stack);
+    //     }
+    //     client.close()
+    // })();
 
