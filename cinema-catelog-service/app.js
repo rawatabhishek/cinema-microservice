@@ -1,37 +1,23 @@
 const express = require('express');
-const db = require('./utilities/dbConnection');
-const ObjectId = require('mongodb').ObjectID;
+const dbConnection = require('./utilities/dbConnection');
 const app = express();
 const port = process.env.port || 3000;
+const cinemaCatalogRoutes = require('./routes/cinema-catalog-routes');
+app.use('/',cinemaCatalogRoutes);
 
+/**
+ * Connecting to mongodb database.
+ * On successful database connection initializing the application.
+ */
+dbConnection.connectToServer(function (error) {
+	if (error) {
+		console.log(error)
+	} else {	
+		// db = db.conn
+		
+		app.listen(port, () => {
+			console.log(`Cinema catalog microservice is running on port ${port}`);
+		});
+	}
 
-
-
-app.get('/cinema/:city', (req, res) => {
-    let city = req.params.city;
-    res.send(city);
-});
-
-app.get('/cinema/details/:cinemaId', (req, res) => {
-    let cinemaId = req.params.cinemaId;
-    res.send(cinemaId);
-});
-
-db.connectToServer(function (error) {
-    if (error) {
-        console.log(error)
-    } else {
-        const dbNew = db.getDb();
-        app.get('/', function(req, res){
-            dbNew.collection('cinemas').find({}).toArray().then(response => {
-                console.log(response);
-            }).catch(error => {
-                console.log(error)
-            })
-        })
-        app.listen(port, () => {
-            console.log(`Cinema Catalog Microservice is running on port ${port}`);
-        });
-    }
-    
 });

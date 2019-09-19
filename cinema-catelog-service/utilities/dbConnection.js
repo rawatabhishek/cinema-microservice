@@ -3,12 +3,10 @@ const ObjectId = require('mongodb').ObjectID;
 let _db;
 
 exports.connectToServer = function (callback) {
-    console.log('Hello')
     const url = 'mongodb://localhost:27017';
     const database = 'cinema-microservice';
     const client = new MongoClinet(url, { useNewUrlParser: true, useUnifiedTopology: true });
     client.connect(function (error) {
-        console.log('Hello world in the db connections')
         if (error) {
             return callback(error);
         } else {
