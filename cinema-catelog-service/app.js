@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const dbConnection = require('./utilities/dbConnection');
 const app = express();
@@ -12,9 +13,7 @@ app.use('/',cinemaCatalogRoutes);
 dbConnection.connectToServer(function (error) {
 	if (error) {
 		console.log(error)
-	} else {	
-		// db = db.conn
-		
+	} else {
 		app.listen(port, () => {
 			console.log(`Cinema catalog microservice is running on port ${port}`);
 		});

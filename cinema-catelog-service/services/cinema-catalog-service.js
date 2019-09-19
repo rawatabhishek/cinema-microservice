@@ -1,10 +1,28 @@
 const dbConn = require('../utilities/dbConnection');
+const ObjectId = require('mongodb').ObjectID;
 
 exports.getCinemaByCity = function (req, res) {
-    const db = dbConn.getDb().collection('cinemas');
-    collection.find({}).toArray().then(response => {
-        console.log('Get cinema by cit');
-        res.send('Get cinema by city');
-    });
+    let cityName = req.params.city;
 
+    const collection = dbConn.getDb().collection('cinemas');
+    collection.find({ "city": cityName }).toArray()
+        .then(response => {
+            res.send(response);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
+
+exports.getCinemaById = function (req, res) {
+    let cinemaId = req.params.cinemaId;
+
+    const collection = dbConn.getDb().collection('cinemas');
+    collection.findOne({ "_id": ObjectId(cinemaId) })
+        .then(response => {
+            res.send(response);
+        })
+        .catch(error => {
+            console.log(error);
+        });
 }

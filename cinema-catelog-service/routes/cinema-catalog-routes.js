@@ -6,15 +6,8 @@ router.get('/cinema/:city', (req, res) => {
 	return cinemaCatalogService.getCinemaByCity(req, res);
 });
 
-// app.get('/cinema/details/:cinemaId', (req, res) => {
-// 	let cinemaId = req.params.cinemaId;
-// 	res.send(cinemaId);
-// });
+router.get('/cinema/details/:cinemaId', (req, res) => {
+	return cinemaCatalogService.getCinemaById(req, res);
+});
 
 module.exports = router;
-
-// exports.cinemaCatalogRoutes = function(app, db) {
-//     app.get('/', () => {
-//         console.log('Hello world!');
-//     })
-// } 

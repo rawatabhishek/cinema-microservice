@@ -1,0 +1,8 @@
+Database Overview
+Name: cinema-microservice
+Collections:
+	-> cinemas
+	-> cities
+	-> countries
+	-> movies
+	-> states
