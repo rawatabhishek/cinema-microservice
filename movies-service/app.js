@@ -2,10 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const dbConnection = require('./utilities/dbConnection');
 const app = express();
-const port = process.env.port || 3000;
-const cinemaCatalogRoutes = require('./routes/cinema-catalog-routes');
+const port = process.env.port || 3010;
+const movieRoutes = require('./routes/movie-routes');
 
-app.use('/', cinemaCatalogRoutes);
+app.use('/', movieRoutes);
 
 /**
  * Connecting to mongodb database.
@@ -16,7 +16,7 @@ dbConnection.connectToServer(function (error) {
 		console.log(error)
 	} else {
 		app.listen(port, () => {
-			console.log(`Cinema catalog microservice is running on port ${port}`);
+			console.log(`Movie microservice is running on port ${port}`);
 		});
 	}
 });
