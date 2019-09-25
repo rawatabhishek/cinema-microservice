@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const cinemaCatalogService = require('../services/cinema-catalog-service');
 
-router.get('/cinema/:city', (req, res) => {
+router.get('/cinema/:cityId', (req, res) => {
 	return cinemaCatalogService.getCinemaByCity(req, res);
 });
 

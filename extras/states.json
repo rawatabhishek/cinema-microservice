@@ -1,0 +1,3 @@
+{"_id":{"$oid":"5d846fefd4069d07fc0456eb"},"countryId":{"$oid":"5d846f7ed4069d07fc0456ea"},"name":"Rajasthan","slug":"rajasthan"}
+{"_id":{"$oid":"5d84c6f2d4069d07fc0456f1"},"countryId":{"$oid":"5d846f7ed4069d07fc0456ea"},"name":"New Delhi","slug":"new_delhi"}
+{"_id":{"$oid":"5d84c79dd4069d07fc0456f4"},"countryId":{"$oid":"5d846f7ed4069d07fc0456ea"},"name":"Maharashtra","slug":"maharashtra"}

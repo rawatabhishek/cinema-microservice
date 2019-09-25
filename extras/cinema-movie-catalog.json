@@ -1,0 +1,1 @@
+{"_id":{"$oid":"5d8892ea5a6f1b22e4c4951b"},"cinema_id":{"$oid":"5d88914c5a6f1b22e4c49512"},"movie_id":{"$oid":"5d84d09dd4069d07fc0456f7"},"currently_showing":true,"ticket_price":[{"category":"Club","price":{"$numberInt":"170"}},{"category":"Executive","price":{"$numberInt":"150"}}],"showtime":["8","10","12","15","18"]}

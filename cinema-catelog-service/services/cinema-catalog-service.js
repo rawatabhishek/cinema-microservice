@@ -2,10 +2,10 @@ const dbConn = require('../utilities/dbConnection');
 const ObjectId = require('mongodb').ObjectID;
 
 exports.getCinemaByCity = function (req, res) {
-    let cityName = req.params.city;
-
+    let cityId = req.params.cityId;
+    
     const collection = dbConn.getDb().collection('cinemas');
-    collection.find({ "city": cityName }).toArray()
+    collection.find({ "city_id": ObjectId(cityId) }).toArray()
         .then(response => {
             res.send(response);
         })
