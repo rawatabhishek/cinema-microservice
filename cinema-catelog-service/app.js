@@ -1,10 +1,12 @@
 require('dotenv').config();
 const express = require('express');
 const dbConnection = require('./utilities/dbConnection');
+const cors = require('cors');
 const app = express();
 const port = process.env.port || 3000;
 const cinemaCatalogRoutes = require('./routes/cinema-catalog-routes');
 
+app.use(cors());
 app.use('/', cinemaCatalogRoutes);
 
 /**
