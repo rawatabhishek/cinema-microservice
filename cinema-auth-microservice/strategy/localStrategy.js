@@ -5,15 +5,14 @@ const dbConn = require('../utilities/dbConnection');
 
 passport.use(new LocalStrategy((username, password, done) => {
     const collection = dbConn.getDb().collection('authentication');
-    collection.findOne({ email: username, password: password })
-    .then(response => {
-        if(!response){
-            return done(null, false, { errorMessage: 'Username or password is invalid'});
-        }
-        return done(null, response);
-    })
-    .catch(error => {
-        console.log('This is error',error);
-        done(error, null, null);
-    });
+    collection.findOne({ email: username, password: password }, { projection: { password: 0 } })
+        .then(response => {
+            if (!response) {
+                return done(null, false, { errorMessage: 'Username or password is invalid' });
+            }
+            return done(null, response, null);
+        })
+        .catch(error => {
+            done(error, null, null);
+        });
 }));
