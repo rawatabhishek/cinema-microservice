@@ -1,7 +1,7 @@
 const ObjectId = require('mongodb').ObjectID;
 const dbConn = require('../utilities/dbConnection');
 
-exports.getCinemas = function (req, res) {    
+exports.getCinemas = function (req, res) {
     const collection = dbConn.getDb().collection('cinemas');
     collection.find({}).toArray()
         .then(response => {
@@ -30,6 +30,29 @@ exports.getCinemaById = function (req, res) {
 
     const collection = dbConn.getDb().collection('cinemas');
     collection.findOne({ "_id": ObjectId(cinemaId) })
+        .then(response => {
+            res.send(response);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}
+
+exports.getCinemaByMovieId = function (req, res) {
+    let movieId = req.params.movieId;
+
+    const collection = dbConn.getDb().collection('cinema-movie-catalog');
+    collection.find(
+        { "movie_id": ObjectId(movieId) },
+        {
+            $lookup: {
+                from: 'cinemas',
+                localField: 'cinema_id',
+                foreignField: '_id',
+                as: 'cinema_details'
+            }
+        }
+    ).toArray()
         .then(response => {
             res.send(response);
         })

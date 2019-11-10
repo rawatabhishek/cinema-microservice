@@ -14,4 +14,8 @@ router.get('/cinema/details/:cinemaId', (req, res) => {
 	return cinemaCatalogService.getCinemaById(req, res);
 });
 
+router.get('/cinema/movie/:movieId', (req, res) => {
+	return cinemaCatalogService.getCinemaByMovieId(req, res);
+})
+
 module.exports = router;
