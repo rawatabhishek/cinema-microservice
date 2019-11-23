@@ -42,8 +42,8 @@ exports.getCinemaByMovieId = function (req, res) {
     let movieId = req.params.movieId;
 
     const collection = dbConn.getDb().collection('cinema-movie-catalog');
-    collection.find(
-        { "movie_id": ObjectId(movieId) },
+    collection.aggregate([
+        { $match: { movie_id: ObjectId(movieId) } },
         {
             $lookup: {
                 from: 'cinemas',
@@ -51,8 +51,11 @@ exports.getCinemaByMovieId = function (req, res) {
                 foreignField: '_id',
                 as: 'cinema_details'
             }
+        },
+        {
+            $project: { _id: 0 }
         }
-    ).toArray()
+    ]).toArray()
         .then(response => {
             res.send(response);
         })

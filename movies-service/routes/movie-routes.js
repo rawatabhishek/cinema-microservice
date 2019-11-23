@@ -6,7 +6,7 @@ router.get('/movie/list', (req, res) => {
 	return movieService.getMoviesList(req, res);
 });
 
-router.get('/movie/:cinemaId', (req, res) => {
+router.get('/movie-details/:movieId', (req, res) => {
 	return movieService.getMovieById(req, res);
 });
 
