@@ -21,4 +21,13 @@ router.post('/login', (req, res, next) => {
     })(req, res, next)
 });
 
+
+router.post('/forgot-password', (req, res) => {
+    return authService.forgotPassword(req, res);
+});
+
+router.post('/reset-password/:id', (req, res) => {
+    return authService.resetPassword(req, res);
+});
+
 module.exports = router;
