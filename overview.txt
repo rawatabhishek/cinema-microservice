@@ -1,3 +1,9 @@
+Microservice Ports
+Cinema-catelog-service: 3000
+movie-microservice: 3010
+auth-microservice: 3020
+booking-microservice: 3030
+
 Database Overview
 Name: cinema-microservice
 Collections:
@@ -6,3 +12,5 @@ Collections:
 	-> countries
 	-> movies
 	-> states
+	
+	

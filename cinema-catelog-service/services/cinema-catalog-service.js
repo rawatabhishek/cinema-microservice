@@ -52,8 +52,22 @@ exports.getCinemaByMovieId = function (req, res) {
                 as: 'cinema_details'
             }
         },
+        { 
+            $unwind: "$cinema_details"
+        },
         {
-            $project: { _id: 0 }
+            $project: { 
+                _id: 1,
+                cinema_id: 1,
+                movie_id: 1,
+                currently_showing: 1,
+                ticket_price: 1,
+                showtime: 1,
+                name: "$cinema_details.name",
+                address: "$cinema_details.address",
+                slug: "$cinema_details.address",
+                city_id: "$cinema_details.address"
+            }
         }
     ]).toArray()
         .then(response => {

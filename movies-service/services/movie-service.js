@@ -22,7 +22,7 @@ exports.getMovieById = function (req, res) {
             let cinemaDetailsUrl = `${process.env.CINEMA_CATALOG_MICROSERVICE}/cinema/movie/${movieId}`;
             return axios.get(cinemaDetailsUrl)
                 .then(cinemaDetails => {
-                    Object.assign(response, cinemaDetails.data[0]);
+                    response['featuring-cinemas'] = cinemaDetails.data;
                     res.send(response);
                 })
                 .catch(error => {
