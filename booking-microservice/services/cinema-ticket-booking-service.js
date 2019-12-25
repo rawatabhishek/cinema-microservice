@@ -27,7 +27,7 @@ exports.getCinemaMovieDetails = function (req, res) {
                 as: 'cinema_details'
             }
         },
-        { 
+        {
             $unwind: "$cinema_details"
         },
         {
@@ -38,17 +38,18 @@ exports.getCinemaMovieDetails = function (req, res) {
                 as: 'movie_details'
             }
         },
-        { 
+        {
             $unwind: "$movie_details"
         },
         {
-            $project: { 
+            $project: {
                 _id: 1,
                 cinema_id: 1,
                 movie_id: 1,
                 cinema_name: "$cinema_details.name",
                 cinema_address: "$cinema_details.address",
-                movie_name: "$movie_details.name"
+                movie_name: "$movie_details.name",
+                ticket_price: 1
             }
         }
     ]).toArray()
@@ -57,5 +58,23 @@ exports.getCinemaMovieDetails = function (req, res) {
         })
         .catch(error => {
             console.log(error);
+        });
+}
+
+exports.saveBookingDetails = function (req, res) {
+    const bookingsDetails = req.body;
+    const collection = dbConn.getDb().collection('bookings');
+    collection.insertOne(bookingsDetails)
+        .then(bookingResponse => {
+            res.send({
+                status: 1,
+                message: 'Booking has been saved successfully.'
+            });
+        })
+        .catch(error => {
+            res.send({
+                status: 0,
+                message: 'Error in saving booking details'
+            });
         });
 }

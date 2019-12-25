@@ -8,6 +8,10 @@ router.post('/booking/cinema/tickets', (req, res) => {
 
 router.get('/get-cinema-movie-details/:id', (req, res) => {
 	return cinemaTicketBookingService.getCinemaMovieDetails(req, res);
-})
+});
+
+router.post('/save-booking-details', (req, res) => {
+	return cinemaTicketBookingService.saveBookingDetails(req, res);
+});
 
 module.exports = router;
