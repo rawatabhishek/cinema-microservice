@@ -1,6 +1,7 @@
 const ObjectId = require('mongodb').ObjectID;
 const dbConn = require('../utilities/dbConnection');
 const utilities = require('../utilities/utils');
+const axios = require('axios');
 
 exports.forgotPassword = function (req, res) {
     const userEmail = req.body.email;
@@ -22,15 +23,27 @@ exports.forgotPassword = function (req, res) {
             )
                 .then(insertResponse => {
                     const mailContent = `Please click on the below link to reset your password. ${process.env.APP_URL}/reset-password/${passwordResetToken}`;
-                    utilities.sendMailtoUser(userEmail, mailSubject, mailContent);
-                    res.send({ status: 1, message: "Password reset mail has been successfully sent to the registered email address." });
+                    const notificationUrl = process.env.NOTIFICATION_MICROSERVICE_URL;
+                    const notificationPayload = {
+                        userEmail: userEmail,
+                        mailSubject: mailSubject,
+                        mailContent: mailContent
+                    }
+                    return axios.post(notificationUrl, notificationPayload)
+                        .then(response => {
+                            return res.send({ status: 1, message: "Password reset mail has been successfully sent to the registered email address." });
+                        })
+                        .catch(error => {
+                            return res.status(400).send({ message: 'Error in sending email.', error: error.message });
+                        });
+
                 })
                 .catch(error => {
-                    res.status(400).send({ message: 'Error in saving token.', error: error.message });
+                    return res.status(400).send({ message: 'Error in saving token.', error: error.message });
                 });
         })
         .catch(error => {
-            res.send({ status: 1, message: "Password reset mail has been successfully sent to the registered email address." });
+            return res.send({ status: 1, message: "Password reset mail has been successfully sent to the registered email address." });
         });
 };
 
@@ -51,13 +64,13 @@ exports.resetPassword = function (req, res) {
     )
         .then(insertResponse => {
             if (insertResponse.matchedCount === 0 && insertResponse.modifiedCount === 0) {
-                res.status(400).send({ status: 0, message: "Invalid token" });
+                return res.status(400).send({ status: 0, message: "Invalid token" });
             } else {
-                res.send({ status: 1, message: "Password has been successfully reset." });
+                return res.send({ status: 1, message: "Password has been successfully reset." });
             }
         })
         .catch(error => {
-            res.status(400).send({ message: 'Error in password reset.', error: error.message });
+            return res.status(400).send({ message: 'Error in password reset.', error: error.message });
         });
 
 };

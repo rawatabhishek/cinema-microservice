@@ -59,69 +59,20 @@ exports.chargePayment = function (req, res) {
                     const bookingEndPoint = `${process.env.BOOKING_MICROSERVICE}/save-booking-details`
                     axios.post(bookingEndPoint, bookingDetails)
                         .then(bookingResponse => {
-                            res.send({
+                            return res.send({
                                 status: 1,
                                 message: 'Payment done successfully.'
                             });
                         })
                         .catch(bookingError => {
-                            console.log(bookingError);
+                            return res.status(400).send({ message: 'Error in saving booking details in the booking table.', error: bookingError.message });
                         });
                 })
                 .catch(paymentInsertError => {
-                    console.log('paymentInsertError', paymentInsertError);
-                    res.send(paymentInsertError);
+                    return res.status(400).send({ message: 'Error in saving payment details in payments table.', error: paymentInsertError.message });
                 });
         })
         .catch(error => {
-            console.log('error', error);
-            res.send(error);
+            return res.status(400).send({ message: 'Error in creating charge from stripe.', error: error.message });
         });
 };
-
-exports.getCinemaMovieDetails = function (req, res) {
-    let cinemaMovieId = req.params.id;
-    const collection = dbConn.getDb().collection('cinema-movie-catalog');
-    collection.aggregate([
-        { $match: { _id: ObjectId(cinemaMovieId) } },
-        {
-            $lookup: {
-                from: 'cinemas',
-                localField: 'cinema_id',
-                foreignField: '_id',
-                as: 'cinema_details'
-            }
-        },
-        {
-            $unwind: "$cinema_details"
-        },
-        {
-            $lookup: {
-                from: 'movies',
-                localField: 'movie_id',
-                foreignField: '_id',
-                as: 'movie_details'
-            }
-        },
-        {
-            $unwind: "$movie_details"
-        },
-        {
-            $project: {
-                _id: 1,
-                cinema_id: 1,
-                movie_id: 1,
-                cinema_name: "$cinema_details.name",
-                cinema_address: "$cinema_details.address",
-                movie_name: "$movie_details.name",
-                ticket_price: 1
-            }
-        }
-    ]).toArray()
-        .then(response => {
-            res.send(response[0]);
-        })
-        .catch(error => {
-            console.log(error);
-        });
-}

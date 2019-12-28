@@ -4,6 +4,7 @@ movie-microservice: 3010
 auth-microservice: 3020
 booking-microservice: 3030
 payment-microservice: 3040
+notification-microservice: 3050
 
 Database Overview
 Name: cinema-microservice

@@ -7,10 +7,10 @@ exports.bookCinemaTickets = function (req, res) {
     const collection = dbConn.getDb().collection('bookings');
     collection.find({}).toArray()
         .then(response => {
-            res.send(response);
+            return res.send(response);
         })
         .catch(error => {
-            console.log(error);
+            return res.status(400).send({ message: 'Error in cinema ticket booking.', error: error.message });
         });
 };
 
@@ -54,27 +54,24 @@ exports.getCinemaMovieDetails = function (req, res) {
         }
     ]).toArray()
         .then(response => {
-            res.send(response[0]);
+            return res.send(response[0]);
         })
         .catch(error => {
-            console.log(error);
+            return res.status(400).send({ message: 'Error in cinema movie details.', error: error.message });
         });
-}
+};
 
 exports.saveBookingDetails = function (req, res) {
     const bookingsDetails = req.body;
     const collection = dbConn.getDb().collection('bookings');
     collection.insertOne(bookingsDetails)
         .then(bookingResponse => {
-            res.send({
+            return res.send({
                 status: 1,
                 message: 'Booking has been saved successfully.'
             });
         })
         .catch(error => {
-            res.send({
-                status: 0,
-                message: 'Error in saving booking details'
-            });
+            return res.status(400).send({ message: 'Error in save booking details.', error: error.message });
         });
-}
+};
